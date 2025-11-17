@@ -1,40 +1,66 @@
 <script>
 	import { createEventDispatcher, onMount } from "svelte";
+    import enterSoundBase from "$lib/assets/enter.mp3";
+    import typeSoundBase from "$lib/assets/typing.mp3";
 
     const dispatch = createEventDispatcher();
     export let command = "pip install myname";
     let typedEl;
     let cursorEl;
     let enterPressed = false;
+    let enterSound;
+    let canPlay = true; // avoid double presses
+    let isWiping = false;
 
     async function typeText() {
         for (let char of command){
             const delay = 40 + Math.random() * 100;
             await new Promise(r => setTimeout(r, delay));
             typedEl.innerHTML += `<span class="fade-char">${char}</span>`;
-        } 
+        }
     }
 
 	function triggerComplete() {
 		if (enterPressed) return;
 		enterPressed = true;
+        isWiping = true;
 
 		cursorEl.style.animation = "none";
-
-		dispatch("complete");
 	}
+
+    function notifyDone() {
+        dispatch("complete");
+    }
+
+    function handleEnter(){
+        if (!canPlay) return;
+        canPlay = false;
+
+        enterSound.currentTime = 0;
+        enterSound.play().catch(() => {});
+
+        // after ~150ms reset
+        setTimeout(() => canPlay = true, 150);
+        triggerComplete();
+    }
 
 	function handleKeydown(e) {
-		if (e.key === "Enter") triggerComplete();
+		if (e.key === "Enter") handleEnter();
 	}
 
+    function loadAudio(){
+        enterSound = new Audio(enterSoundBase); // put file in static/sounds
+        enterSound.preload = "auto";
+    }
+
     onMount(() => {
-        window.addEventListener("keydown", handleKeydown);
         typeText();
+        loadAudio();
+        window.addEventListener("keydown", handleKeydown);
     });
 </script>
 
-<div class="terminal">
+<div class="terminal" class:wipe-out={isWiping} onanimationend={notifyDone}>
     <div class="header">
         <span class="dot red"></span>
         <span class="dot yellow"></span>
@@ -48,7 +74,7 @@
         </div>
     </div>
     <div class="keyboard">
-		<div class="enter-key" on:click={triggerComplete}>ENTER</div>
+		<div class="enter-key" onclick={handleEnter} onkeydown={handleKeydown} role="button" tabindex="0">ENTER</div>
 	</div>
 </div>
 
@@ -149,4 +175,27 @@
 		transform: perspective(200px) translateZ(5px);
 		box-shadow: 0 2px 0 #000;
 	}
+    .wipe-out {
+        animation: wipeDiagonal 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        transform-origin: top right;
+    }
+
+    @keyframes wipeDiagonal {
+        0% {
+            opacity: 1;
+            transform: translate(0, 0) skew(0deg, 0deg) scale(1);
+            filter: blur(0px);
+        }
+
+        100% {
+            opacity: 0;
+            transform:
+                translate(50px, 60px)   /* diagonal up-right */
+                skew(-6deg, -2deg)       /* slight macOS space-switch skew */
+                scale(0.97);             /* subtle shrink */
+            filter: blur(10px);
+        }
+    }
+
+
 </style>
