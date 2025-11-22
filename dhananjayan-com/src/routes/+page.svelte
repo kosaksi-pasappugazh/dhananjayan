@@ -1,7 +1,7 @@
 <script>
 	import Terminal from "$lib/Terminal.svelte";
 	import LinkedInCard from "$lib/cards/LinkedInCard.svelte";
-    import { linkedin } from "$lib/data/profile.js";
+    import { linkedin } from "dhananjayan";
 
 	let introDone = false;
 	let hideTerminal = false;
