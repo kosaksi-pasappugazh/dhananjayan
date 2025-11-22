@@ -1,5 +1,7 @@
 <script>
 	import Terminal from "$lib/Terminal.svelte";
+	import LinkedInCard from "$lib/cards/LinkedInCard.svelte";
+    import { linkedin } from "$lib/data/profile.js";
 
 	let introDone = false;
 	let hideTerminal = false;
@@ -23,7 +25,7 @@
 	{#if introDone}
 		<div class="landing fadeIn">
 			<h1>Welcome to my portfolio ✨</h1>
-			<p>This page lives entirely in +page.svelte now.</p>
+			<LinkedInCard data={linkedin} />
 		</div>
 	{/if}
 </div>
@@ -34,6 +36,14 @@
 		width: 100%;
 		height: 100vh;
 		overflow: hidden;
+	}
+
+	:global(body){
+		background-color: black;
+	}
+
+	h1{
+		color: white;
 	}
 
 	.fadeOut {

@@ -4,7 +4,7 @@
     import typeSoundBase from "$lib/assets/typing.mp3";
 
     const dispatch = createEventDispatcher();
-    export let command = "pip install myname";
+    export let command = "pip install dhananjayan";
     let typedEl;
     let cursorEl;
     let enterPressed = false;

@@ -1,0 +1,78 @@
+:root {
+    /* Core brand colors */
+    --color-sand: #F6E8D8;
+    --color-apricot: #FFBC8A;
+    --color-apricot-dark: #ffb079;
+    --color-tea: #5F8D77;
+    --color-lavender: #D6C7FF;
+    --color-ink: #2B2B2B;
+
+    /* Extended palette */
+    --color-ink-light: #444444;
+    --color-ink-lighter: #555555;
+    --color-chip-border: rgba(95, 141, 119, 0.35);
+    --color-apricot-border: rgba(255, 188, 138, 0.45);
+    --color-apricot-glow: rgba(255, 188, 138, 0.20);
+    --color-lavender-glow: rgba(214, 199, 255, 0.30);
+
+    /* Logos */
+    --logo-linkedin: url("/assets/linkedinlogo.png");
+
+    /* Typography */
+    --font-primary: 'Inter', 'SF Pro Display', 'Segoe UI', sans-serif;
+    --font-display: 'Inter Tight', 'SF Pro Display', sans-serif;
+
+    /* Type scale */
+    --fs-xs: 0.75rem;
+    --fs-sm: 0.85rem;
+    --fs-base: 1rem;
+    --fs-md: 1.15rem;
+    --fs-lg: 1.35rem;
+
+    /* Radii */
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+
+    /* Shadows */
+    --shadow-soft: 0 3px 8px rgba(0,0,0,0.12);
+    --shadow-warm: 0 0 12px var(--color-apricot-glow);
+    --shadow-hover: 0 8px 22px rgba(0,0,0,0.20), 0 0 18px var(--color-lavender-glow);
+}
+
+html, body {
+    font-family: var(--font-primary);
+    color: var(--color-ink);
+    background-color: #0F0E0E;
+    line-height: 1.4;
+    font-weight: 400;
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.015em;
+    color: var(--color-ink);
+    margin: 0;
+}
+
+h1 {
+    font-size: calc(var(--fs-lg) * 1.6);
+    font-weight: 700;
+}
+
+h2 {
+    font-size: calc(var(--fs-lg) * 1.2);
+    font-weight: 600;
+}
+
+p {
+    font-size: var(--fs-sm);
+    color: var(--color-ink-light);
+    margin: 0.2rem 0;
+}
+
+button, a {
+    font-family: var(--font-primary);
+    letter-spacing: -0.01em;
+    font-size: var(--fs-sm);
+}
